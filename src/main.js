@@ -4,6 +4,7 @@ import router from './router'
 import Elementui from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './style/index.less'
+
 Vue.config.productionTip = false
 Vue.use(Elementui)
 new Vue({
