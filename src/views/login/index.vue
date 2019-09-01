@@ -2,7 +2,7 @@
   <div class="login">
 <el-card class="box-card">
     <div><img src="../../assets/img/logo_index.png" alt=""></div>
-<el-form ref="form" :model="loginForm" :rules="loginRules" :status-icon="true">
+<el-form ref="loginForm" :model="loginForm" :rules="loginRules" :status-icon="true">
   <el-form-item prop="mobile">
     <el-input v-model="loginForm.mobile" placeholder="请输入手机号码"></el-input>
   </el-form-item>
@@ -14,7 +14,7 @@
      <el-checkbox v-model="loginForm.check" class="checke">我已阅读并同意用户协议和隐私条款</el-checkbox>
   </el-form-item>
    <el-form-item>
-<el-button type="primary" class="btn">确定</el-button>
+<el-button type="primary" class="btn" @click="btn">确定</el-button>
   </el-form-item>
 </el-form>
 </el-card>
@@ -56,6 +56,17 @@ export default {
         validator
       }]
       }
+    }
+  },
+  methods: {
+    btn () {
+      this.$refs.loginForm.validate(isOk => {
+        if (isOk) {
+          this.$message({ type: 'success', message: '成功' })
+        } else {
+          this.$message({ type: 'warning', message: '失败' })
+        }
+      })
     }
   }
 }
