@@ -52,7 +52,8 @@ export default {
 
 <style lang="less" scoped>
 .logo1{
-    width: 200px;
+
+    width: 201px;
     height: 100vh;
     background-color:#353b4e ;
     .m{
