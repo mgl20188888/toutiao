@@ -7,14 +7,14 @@
       </el-col>
   <el-col class="right" :span="3">
       <img class='head-img' :src="userInfo.photo ? userInfo.photo : defaultImg" alt="">
-      <el-dropdown trigger="click">
+      <el-dropdown trigger="click" @command="handleCommand">
       <span class="el-dropdown-link">
         {{userInfo.name}}<i class="el-icon-arrow-down el-icon--right"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item>个人信息</el-dropdown-item>
-        <el-dropdown-item>git地址</el-dropdown-item>
-        <el-dropdown-item>退出</el-dropdown-item>
+        <el-dropdown-item command="a">个人信息</el-dropdown-item>
+        <el-dropdown-item command="b">git地址</el-dropdown-item>
+        <el-dropdown-item command="c">退出</el-dropdown-item>
 
       </el-dropdown-menu>
     </el-dropdown>
@@ -33,6 +33,16 @@ export default {
     }
   },
   methods: {
+    handleCommand (command) {
+      if (command === 'a') {
+
+      } else if (command === 'b') {
+        window.location.href = 'https://github.com'
+      } else {
+        window.localStorage.clear()
+        this.$router.push('./login')
+      }
+    },
     getUserInfo () {
       let token = window.localStorage.getItem('user-token')
       this.$axios({
