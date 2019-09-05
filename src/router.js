@@ -26,6 +26,9 @@ export default new Router({
       {
         path: '/home/comment',
         component: () => import('./views/comunt')
+      }, {
+        path: '/home/material',
+        component: () => import('./views/sucai')
       }]
     }
 
