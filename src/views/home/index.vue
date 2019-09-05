@@ -1,10 +1,8 @@
 <template>
-  <div>
- <el-container>
+<div>
+   <el-container>
   <el-aside style="width:200px; background: #353b4e;" >
-    <aside-a>
       <layout-aside></layout-aside>
-    </aside-a>
   </el-aside>
   <el-container>
     <el-header>
@@ -15,7 +13,9 @@
     </el-main>
   </el-container>
 </el-container>
-  </div>
+
+</div>
+
 </template>
 
 <script>
@@ -23,8 +23,8 @@
 // import layoutHeader from '../../components/home/layout-header'
 export default {
   // components: {
-  //   // 'layout-aside': layoutAside,
-  //   // 'layout-header': layoutHeader
+  //   'layout-aside': layoutAside,
+  //   'layout-header': layoutHeader
   // }
 }
 </script>

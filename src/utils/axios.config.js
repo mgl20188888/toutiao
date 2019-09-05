@@ -4,5 +4,9 @@ axios.interceptors.request.use(function (config) {
   let token = window.localStorage.getItem('user-token')
   config.headers['Authorization'] = `Bearer ${token}`
   return config
-}, function () {})
+}, function () { })
+axios.interceptors.response.use(function (response) {
+  return response.data ? response.data : { }
+}, function () { })
+
 export default axios

@@ -69,7 +69,7 @@ export default {
           }).then(result => {
             // console.log(result.data.data.token)
 
-            window.localStorage.setItem('user-token', result.data.data.token)
+            window.localStorage.setItem('user-token', result.data.token)
             this.$router.push('/')
           })
             .catch(() => {
