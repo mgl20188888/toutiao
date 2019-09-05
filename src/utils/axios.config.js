@@ -1,7 +1,12 @@
 import axios from 'axios'
 import router from '../promition'
 import { Message } from 'element-ui'
+import jsonBigInt from 'json-bigint'
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'
+
+axios.defaults.transformResponse = [function (data) {
+  return jsonBigInt.parse(data)
+}]
 axios.interceptors.request.use(function (config) {
   let token = window.localStorage.getItem('user-token')
   config.headers['Authorization'] = `Bearer ${token}`
