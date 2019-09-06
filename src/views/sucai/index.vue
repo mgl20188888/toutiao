@@ -9,7 +9,11 @@
           <el-card class="imgcard" v-for="item in list" :key="item.id">
             <img :src="item.url" alt />
             <el-row class="icon" type="flex" justify="space-around">
-              <i :style="{color:item.is_collected ? 'red':''}" class="el-icon-star-on"></i>
+              <i
+                @click="collectOrcancel(item)"
+                :style="{color:item.is_collected ? 'red':''}"
+                class="el-icon-star-on"
+              ></i>
               <i @click="delImg(item)" class="el-icon-delete-solid"></i>
             </el-row>
           </el-card>
@@ -60,6 +64,18 @@ export default {
     }
   },
   methods: {
+    collectOrcancel (item) {
+      let mess = item.is_collected ? '取消' : ''
+      this.$confirm(`您是否要${mess}收藏此图片?`, '提示').then(() => {
+        this.$axios({
+          url: `/user/images/${item.id}`,
+          method: 'put',
+          data: { collect: !item.is_collected }
+        }).then(() => {
+          this.getTupian()
+        })
+      })
+    },
     delImg (item) {
       this.$confirm('您确定要删除此图片吗?', '提示').then(() => {
         this.$axios({
