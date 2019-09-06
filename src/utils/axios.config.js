@@ -1,19 +1,21 @@
 import axios from 'axios'
 import router from '../promition'
-import { Message } from 'element-ui'
+import {
+  Message
+} from 'element-ui'
 import jsonBigInt from 'json-bigint'
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'
 
 axios.defaults.transformResponse = [function (data) {
-  return jsonBigInt.parse(data)
+  return data ? jsonBigInt.parse(data) : {}
 }]
 axios.interceptors.request.use(function (config) {
   let token = window.localStorage.getItem('user-token')
   config.headers['Authorization'] = `Bearer ${token}`
   return config
-}, function () { })
+}, function () {})
 axios.interceptors.response.use(function (response) {
-  return response.data ? response.data : { }
+  return response.data ? response.data : {}
 }, function (error) {
   let status = error.response.status
   let message = ''
@@ -39,8 +41,11 @@ axios.interceptors.response.use(function (response) {
       message = '未知错误'
       break
   }
-  Message({ type: 'warning', message })
-  return new Promise(function () { })
+  Message({
+    type: 'warning',
+    message
+  })
+  return new Promise(function () {})
 })
 
 export default axios

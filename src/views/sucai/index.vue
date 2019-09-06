@@ -10,7 +10,7 @@
             <img :src="item.url" alt />
             <el-row class="icon" type="flex" justify="space-around">
               <i :style="{color:item.is_collected ? 'red':''}" class="el-icon-star-on"></i>
-              <i class="el-icon-delete-solid"></i>
+              <i @click="delImg(item)" class="el-icon-delete-solid"></i>
             </el-row>
           </el-card>
         </div>
@@ -60,6 +60,16 @@ export default {
     }
   },
   methods: {
+    delImg (item) {
+      this.$confirm('您确定要删除此图片吗?', '提示').then(() => {
+        this.$axios({
+          url: `/user/images/${item.id}`,
+          method: 'delete'
+        }).then(() => {
+          this.getTupian()
+        })
+      })
+    },
     changePage (newPage) {
       this.page.page = newPage
       this.getTupian()
