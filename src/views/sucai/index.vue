@@ -3,6 +3,9 @@
     <bread-crumb slot="header">
       <template slot="title">素材管理</template>
     </bread-crumb>
+    <el-upload :show-file-list="false" :http-request="uploadimg" action class="upbtn">
+      <el-button type="primary">上传图片</el-button>
+    </el-upload>
     <el-tabs v-model="activeName" @tab-click="tabChange">
       <el-tab-pane label="全部图片" name="all">
         <div class="tu">
@@ -64,6 +67,17 @@ export default {
     }
   },
   methods: {
+    uploadimg (params) {
+      let obj = new FormData()
+      obj.append('image', params.file)
+      this.$axios({
+        url: '/user/images',
+        method: 'post',
+        data: obj
+      }).then(() => {
+        this.getTupian()
+      })
+    },
     collectOrcancel (item) {
       let mess = item.is_collected ? '取消' : ''
       this.$confirm(`您是否要${mess}收藏此图片?`, '提示').then(() => {
@@ -117,6 +131,11 @@ export default {
 
 <style lang="less" scoped>
 .tupian {
+  .upbtn {
+    position: absolute;
+    right: 60px;
+    margin-top: -10px;
+  }
   .tu {
     display: flex;
     flex-wrap: wrap;
