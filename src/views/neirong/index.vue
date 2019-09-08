@@ -5,22 +5,26 @@
     </bread-crumb>
     <el-form style="margin-left:40px">
       <el-form-item label="文章状态">
-        <el-radio-group>
-          <el-radio>全部</el-radio>
-          <el-radio>草稿</el-radio>
-          <el-radio>待审核</el-radio>
-          <el-radio>审核通过</el-radio>
-          <el-radio>审核未通过</el-radio>
+        <el-radio-group @change="changeCondition" v-model="searchForm.status">
+          <el-radio :label="5">全部</el-radio>
+          <el-radio :label="0">草稿</el-radio>
+          <el-radio :label="1">待审核</el-radio>
+          <el-radio :label="2">审核通过</el-radio>
+          <el-radio :label="3">审核未通过</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="频道列表">
-        <el-select></el-select>
+
+        <el-select @change="changeCondition" v-model="searchForm.channel_id">
+          <el-option v-for="item in channels" :key="item.id" :label="item.name" :value="item.id"></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="日期选择">
         <el-date-picker
-          v-model="value1"
-          type="datetimerange"
-          range-separator="至"
+        @change="changeCondition"
+        value-format="yyyy-mm-dd"
+          v-model="searchForm.dateRange"
+          type="daterange"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
         ></el-date-picker>
@@ -55,21 +59,47 @@ export default {
   data () {
     return {
       list: [],
-      defaultImg: require('../../assets/img/avatar.jpg')
+      defaultImg: require('../../assets/img/avatar.jpg'),
+      searchForm: {
+        status: 5,
+        channel_id: null,
+        dateRange: ''
+      },
+      channels: []
     }
   },
   methods: {
-    getArticle () {
+
+    changeCondition () {
+      let params = {
+        status: this.searchForm.status === 5 ? null : this.searchForm.status,
+        channel_id: this.searchForm.channel_id,
+        begin_pubdate: this.searchForm.dateRange.length > 0 ? this.searchForm.dateRange[0] : null,
+        end_pubdate: this.searchForm.dateRange.length > 1 ? this.searchForm.dateRange[1] : null
+      }
+      this.getArticle(params)
+    },
+
+    getArticle (params) {
       this.$axios({
-        url: '/articles'
+        url: '/articles',
+        params
       }).then(result => {
         this.list = result.data.results
+      })
+    },
+    getChannels () {
+      this.$axios({
+        url: '/channels'
+      }).then(result => {
+        this.channels = result.data.channels
       })
     }
 
   },
   created () {
     this.getArticle()
+    this.getChannels()
   },
   filters: {
     statusText (value) {
