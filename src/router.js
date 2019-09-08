@@ -35,6 +35,11 @@ export default new Router({
       path: '/home/articles',
       component: () =>
                         import('./views/neirong')
+    },
+    {
+      path: '/home/publish',
+      component: () =>
+                        import('./views/publish')
     }
 
     ]
