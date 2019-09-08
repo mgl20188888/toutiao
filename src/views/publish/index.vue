@@ -72,7 +72,14 @@ export default {
     publish () {
       this.$refs.publishform.validate((isOk) => {
         if (isOk) {
-
+          this.$axios({
+            url: '/articles',
+            method: 'post',
+            params: { darft: false },
+            data: this.formData
+          }).then(() => {
+            this.$router.push('/home/articles')
+          })
         }
       })
     },
