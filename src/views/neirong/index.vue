@@ -44,7 +44,7 @@
           <span>
             <i class="el-icon-edit">修改</i>
           </span>
-          <span>
+          <span @click="delItem(item)">
             <i class="el-icon-delete">删除</i>
           </span>
         </div>
@@ -83,6 +83,17 @@ export default {
     }
   },
   methods: {
+    delItem (item) {
+      this.$confirm('您真的要删除此文章吗?', '提示').then(() => {
+        this.$axios({
+          method: 'delete',
+          url: `/articles/${item.id.toString()}`
+
+        }).then(() => {
+          this.getConditionArtical()
+        })
+      })
+    },
     pageChange (newPage) {
       this.page.page = newPage
       this.getConditionArtical()
