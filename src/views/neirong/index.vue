@@ -41,7 +41,7 @@
           </div>
         </div>
         <div class="right">
-          <span>
+          <span @click="xiugai(item)">
             <i class="el-icon-edit">修改</i>
           </span>
           <span @click="delItem(item)">
@@ -83,6 +83,9 @@ export default {
     }
   },
   methods: {
+    xiugai (item) {
+      this.$router.push(`/home/publish/${item.id.toString()}`)
+    },
     delItem (item) {
       this.$confirm('您真的要删除此文章吗?', '提示').then(() => {
         this.$axios({

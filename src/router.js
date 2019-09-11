@@ -40,6 +40,11 @@ export default new Router({
       path: '/home/publish',
       component: () =>
                         import('./views/publish')
+    },
+    {
+      path: '/home/publish/:articleId',
+      component: () =>
+                        import('./views/publish')
     }
 
     ]
