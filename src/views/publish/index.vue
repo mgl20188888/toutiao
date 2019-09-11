@@ -3,7 +3,13 @@
     <bread-crumb slot="header">
       <template slot="title">发布文章</template>
     </bread-crumb>
-    <el-form ref="publishform" :model="formData" :rules="publishRules" style="margin-left:100px" label-width="100px">
+    <el-form
+      ref="publishform"
+      :model="formData"
+      :rules="publishRules"
+      style="margin-left:100px"
+      label-width="100px"
+    >
       <el-form-item prop="title" label="标题">
         <el-input v-model="formData.title" style="width:450px"></el-input>
       </el-form-item>
@@ -20,17 +26,12 @@
       </el-form-item>
       <el-form-item prop="channel_id" label="频道">
         <el-select v-model="formData.channel_id" placeholder="请选择">
-          <el-option
-            v-for="item in channels"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id"
-          ></el-option>
+          <el-option v-for="item in channels" :key="item.id" :label="item.name" :value="item.id"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button @click="publish" type="primary">发布文章</el-button>
-        <el-button>存入草稿</el-button>
+        <el-button @click="publish(false)" type="primary">发布文章</el-button>
+        <el-button @click="publish(true)">存入草稿</el-button>
       </el-form-item>
     </el-form>
   </el-card>
@@ -40,7 +41,6 @@
 export default {
   data () {
     return {
-
       channels: [],
       formData: {
         title: '',
@@ -48,34 +48,40 @@ export default {
         cover: {
           type: 0,
           images: []
-
         },
         channel_id: null
       },
       publishRules: {
-        title: [{
-          required: true,
-          message: '标题不能为空'
-        }],
-        content: [{
-          required: true,
-          message: '内容不能为空'
-        }],
-        channel_id: [{
-          required: true,
-          message: '频道不能为空'
-        }]
+        title: [
+          {
+            required: true,
+            message: '标题不能为空'
+          }
+        ],
+        content: [
+          {
+            required: true,
+            message: '内容不能为空'
+          }
+        ],
+        channel_id: [
+          {
+            required: true,
+            message: '频道不能为空'
+          }
+        ]
       }
     }
   },
   methods: {
-    publish () {
-      this.$refs.publishform.validate((isOk) => {
+    publish (draft) {
+      this.$refs.publishform.validate(isOk => {
         if (isOk) {
+          let { articleId } = this.$route.params
           this.$axios({
-            url: '/articles',
-            method: 'post',
-            params: { darft: false },
+            url: articleId ? `/articles/${articleId}` : '/articles',
+            method: articleId ? 'put' : 'post',
+            params: { draft },
             data: this.formData
           }).then(() => {
             this.$router.push('/home/articles')
