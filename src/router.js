@@ -45,6 +45,11 @@ export default new Router({
       path: '/home/publish/:articleId',
       component: () =>
                         import('./views/publish')
+    },
+    {
+      path: 'account',
+      component: () =>
+                        import('./views/zhanghuxinxi')
     }
 
     ]
