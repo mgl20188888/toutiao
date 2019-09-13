@@ -25,7 +25,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item>
-        <cover-images :images="formData.cover.images"></cover-images>
+        <cover-images @onselect="selectImg" :images="formData.cover.images"></cover-images>
       </el-form-item>
       <el-form-item prop="channel_id" label="频道">
         <el-select v-model="formData.channel_id" placeholder="请选择">
@@ -77,6 +77,9 @@ export default {
     }
   },
   methods: {
+    selectImg (url, index) {
+      this.formData.cover.images = this.formData.cover.images.map((item, i) => i === index ? url : item)
+    },
     changetype () {
       if (this.formData.cover.type === 1) {
         this.formData.cover.images = ['']
