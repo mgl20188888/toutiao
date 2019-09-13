@@ -16,7 +16,7 @@
       <el-form-item prop="content" label="内容">
         <quill-iditor v-model="formData.content" style="height:200px;width:700px"></quill-iditor>
       </el-form-item>
-      <el-form-item label="封面" style="margin-top:150px">
+      <el-form-item label="封面" style="margin-top:150px" prop="cover">
         <el-radio-group @change="changetype" v-model="formData.cover.type">
           <el-radio v-model="radio" :label="1">单图</el-radio>
           <el-radio v-model="radio" :label="3">三图</el-radio>
@@ -43,6 +43,23 @@
 <script>
 export default {
   data () {
+    let func = function (rules, value, callback) {
+      if (value.type === 1) {
+        (value.type.length === 1 && value.images[0]) ? callback() : callback(new Error('对不起,您未设置单图的封面'))
+      } else if (value.type === 3) {
+        if (value.type.length === 3 && value.images[0] && value.images[1] && value.images[2]) {
+          callback()
+        } else {
+          callback(new Error('对不起,您未设置三个封面'))
+        }
+      } else {
+        if (value.type.length > 0) {
+          callback(new Error('对不起,您设置的封面有误'))
+        } else {
+          callback()
+        }
+      }
+    }
     return {
       channels: [],
       formData: {
@@ -59,6 +76,11 @@ export default {
           {
             required: true,
             message: '标题不能为空'
+          },
+          {
+            min: 5,
+            max: 30,
+            message: '标题长度是5到30之间的数字字母或汉子'
           }
         ],
         content: [
@@ -72,7 +94,10 @@ export default {
             required: true,
             message: '频道不能为空'
           }
-        ]
+        ],
+        cover: [{
+          validator: func
+        }]
       }
     }
   },
