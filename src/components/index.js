@@ -6,11 +6,14 @@ import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
 import { quillEditor } from 'vue-quill-editor'
+import coverImage from './publish/cover-images.vue'
+
 export default {
   install: function (Vue) {
     Vue.component('layout-header', layoutHeader)
     Vue.component('layout-aside', layoutAside)
     Vue.component('bread-crumb', breadCrumb)
     Vue.component('quill-iditor', quillEditor)
+    Vue.component('cover-images', coverImage)
   }
 }

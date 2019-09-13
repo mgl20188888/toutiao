@@ -24,6 +24,9 @@
           <el-radio v-model="radio" :label="-1">自动</el-radio>
         </el-radio-group>
       </el-form-item>
+      <el-form-item>
+        <cover-images :images="formData.cover.images"></cover-images>
+      </el-form-item>
       <el-form-item prop="channel_id" label="频道">
         <el-select v-model="formData.channel_id" placeholder="请选择">
           <el-option v-for="item in channels" :key="item.id" :label="item.name" :value="item.id"></el-option>
@@ -76,9 +79,9 @@ export default {
   methods: {
     changetype () {
       if (this.formData.cover.type === 1) {
-        this.formData.cover.images = ['http://toutiao.meiduo.site/FpRjG_1Ge-e-smOgynojWwBoMX22']
+        this.formData.cover.images = ['']
       } else if (this.formData.cover.type === 3) {
-        this.formData.cover.images = ['http://toutiao.meiduo.site/FpRjG_1Ge-e-smOgynojWwBoMX22', 'http://toutiao.meiduo.site/FpRjG_1Ge-e-smOgynojWwBoMX22', 'http://toutiao.meiduo.site/FpRjG_1Ge-e-smOgynojWwBoMX22']
+        this.formData.cover.images = ['', '', '']
       } else {
         this.formData.cover.images = []
       }
