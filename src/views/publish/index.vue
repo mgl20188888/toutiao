@@ -17,7 +17,7 @@
         <quill-iditor v-model="formData.content" style="height:200px;width:700px"></quill-iditor>
       </el-form-item>
       <el-form-item label="封面" style="margin-top:150px">
-        <el-radio-group v-model="formData.cover.type">
+        <el-radio-group @change="changetype" v-model="formData.cover.type">
           <el-radio v-model="radio" :label="1">单图</el-radio>
           <el-radio v-model="radio" :label="3">三图</el-radio>
           <el-radio v-model="radio" :label="0">无图</el-radio>
@@ -74,6 +74,15 @@ export default {
     }
   },
   methods: {
+    changetype () {
+      if (this.formData.cover.type === 1) {
+        this.formData.cover.images = ['http://toutiao.meiduo.site/FpRjG_1Ge-e-smOgynojWwBoMX22']
+      } else if (this.formData.cover.type === 3) {
+        this.formData.cover.images = ['http://toutiao.meiduo.site/FpRjG_1Ge-e-smOgynojWwBoMX22', 'http://toutiao.meiduo.site/FpRjG_1Ge-e-smOgynojWwBoMX22', 'http://toutiao.meiduo.site/FpRjG_1Ge-e-smOgynojWwBoMX22']
+      } else {
+        this.formData.cover.images = []
+      }
+    },
     publish (draft) {
       this.$refs.publishform.validate(isOk => {
         if (isOk) {
