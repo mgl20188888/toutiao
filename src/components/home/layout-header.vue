@@ -88,6 +88,24 @@ export default {
         margin-right: 15px;
     }
 }
+.right3{
+    display: flex;
+    align-items: center;
+    .head-img{
+        width: 40px;
+        height: 40px;
+        margin-right: 15px;
+    }
+}
+.right5{
+    display: flex;
+    align-items: center;
+    .head-img{
+        width: 40px;
+        height: 40px;
+        margin-right: 15px;
+    }
+}
 }
 
 </style>
